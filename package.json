@@ -23,6 +23,7 @@
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eth-json-rpc-filters": "^4.1.1",
+    "ethereumjs-util": "^7.1.5",
     "fixed-merkle-tree": "^0.7.3",
     "hardhat": "^2.14.0",
     "prettier": "^2.2.1",
@@ -30,6 +31,7 @@
     "snarkjs": "git+https://github.com/tornadocash/snarkjs.git#869181cfaf7526fe8972073d31655493a04326d5",
     "solhint-plugin-prettier": "^0.0.5",
     "solidity-coverage": "^0.7.22",
+    "solidity-create2-deployer": "^0.4.0",
     "web3": "^1.10.0",
     "web3-utils": "^1.10.0",
     "websnark": "git+https://github.com/tornadocash/websnark.git#4c0af6a8b65aabea3c09f377f63c44e7a58afa6d"
