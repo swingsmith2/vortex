@@ -83,7 +83,7 @@ contract TornadoCash_Eth_01Factory {
 
         // 不在使用 assembly的新语法调用 create2 ,  仅仅传递 salt 就可以
         // 参考文档：https://learnblockchain.cn/docs/solidity/control-structures.html#create2
-        return address(new TornadoCash_Eth_01{salt: bytes32(_salt)}(eth_01_IVerifier(address(0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0)),uint(10 ** 17), uint32(31), address(0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266), address(0x5FbDB2315678afecb367f032d93F642f64180aa3)));
+        return address(new TornadoCash_Eth_01{salt: bytes32(_salt)}(address(0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0),uint(10 ** 17), uint32(31), address(0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266), address(0x5FbDB2315678afecb367f032d93F642f64180aa3)));
     }
 
     // 1. 获取待部署合约字节码

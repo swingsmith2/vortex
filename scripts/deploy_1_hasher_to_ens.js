@@ -34,7 +34,7 @@ async function main() {
 
     let calculateHasherAddress = calculateAddress(ownerAddress, nonce)
 
-    let Hasher = new ethers.ContractFactory(obj.abi, obj.bytecode, owner)
+    let Hasher = new ethers.ContractFactory(obj.abi, obj.bytecode.toString(), owner)
     let hasher = await Hasher.deploy();
     await hasher.deployed();
 
@@ -46,6 +46,9 @@ async function main() {
     let d = "Hasher deployed to: " + hasher.address + "\n"
     console.log(d);
     fs.appendFileSync(outputPath, d)
+
+    let x = await hasher.MiMCSponge(123456534,0)
+    console.log("x: "+ x.toString())
 
     // //USDT
     let calculateUsdtAddress = calculateAddress(ownerAddress, ++nonce)
@@ -117,10 +120,10 @@ async function main() {
     let calculateTornAddress = calculateAddress(ownerAddress, nonce2)
     let calculateTornadoCash_Eth_01_Address = calculateAddress(ownerAddress, ++nonce2)
     let calculateTornadoCash_erc20_Address = calculateAddress(ownerAddress, ++nonce2)
+    let calculateFeeManagerAddress = calculateAddress(ownerAddress, ++nonce2)
+    let calculateTornadoStakingRewardsAddress = calculateAddress(ownerAddress, ++nonce2)
     let calculateRelayerRegistryAddress = calculateAddress(ownerAddress, ++nonce2)
     let calculateInstanceRegistryAddress = calculateAddress(ownerAddress, ++nonce2)
-    let calculateTornadoStakingRewardsAddress = calculateAddress(ownerAddress, ++nonce2)
-    let calculateFeeManagerAddress = calculateAddress(ownerAddress, ++nonce2)
     let calculateTornadoRouterAddress = calculateAddress(ownerAddress, ++nonce2)
 
     b = await ens.recordExists(ethers.utils.formatBytes32String(ens_FeeManager))
@@ -178,6 +181,8 @@ async function main() {
     resolver = await ens.resolver(ethers.utils.formatBytes32String(ens_TornadoRouter))
     console.log(ens_TornadoRouter+"resolver: "+resolver.toString())
 
+    nonce2 = await getPendingNonce(ownerAddress)
+    console.log("nonce2 after: "+nonce2)
 }
 
 main()

@@ -37,19 +37,19 @@ async function main() {
     const ens_RelayerRegistry = "RelayerRegistry.eth"
     const ens_TornadoRouter = "TornadoRouter.eth"
     //要改的
-    let hasher_address = "0x7bc06c482DEAd17c0e297aFbC32f6e63d3846650"
-    let verifier_address = "0xFD471836031dc5108809D173A067e8486B9047A3"
-    let usdt_address = "0xc351628EB244ec633d5f21fBD6621e1a683B1181"
-    let eNSRegistry_address = "0xcbEAF3BDe82155F56486Fb5a1072cb8baAf547cc"
-    let nonce2 = 67
+    let hasher_address = "0xa6e99A4ED7498b3cdDCBB61a6A607a4925Faa1B7"
+    let usdt_address = "0x5302E909d1e93e30F05B5D6Eea766363D14F9892"
+    let verifier_address = "0x0ed64d01D0B4B655E410EF1441dD677B695639E7"
+    let eNSRegistry_address = "0x4bf010f1b9beDA5450a8dD702ED602A104ff65EE"
+    let nonce2 = 161
 
     let calculateTornAddress = calculateAddress(ownerAddress, nonce2)
     let calculateTornadoCash_Eth_01_Address = calculateAddress(ownerAddress, ++nonce2)
     let calculateTornadoCash_erc20_Address = calculateAddress(ownerAddress, ++nonce2)
+    let calculateFeeManagerAddress = calculateAddress(ownerAddress, ++nonce2)
+    let calculateTornadoStakingRewardsAddress = calculateAddress(ownerAddress, ++nonce2)
     let calculateRelayerRegistryAddress = calculateAddress(ownerAddress, ++nonce2)
     let calculateInstanceRegistryAddress = calculateAddress(ownerAddress, ++nonce2)
-    let calculateTornadoStakingRewardsAddress = calculateAddress(ownerAddress, ++nonce2)
-    let calculateFeeManagerAddress = calculateAddress(ownerAddress, ++nonce2)
     let calculateTornadoRouterAddress = calculateAddress(ownerAddress, ++nonce2)
 
     //TORN
@@ -69,8 +69,8 @@ async function main() {
     fs.appendFileSync(outputPath, d)
 
     //TornadoCash_Eth_01
-    let TornadoCash_Eth_01 = await ethers.getContractFactory("TornadoCash_Eth_01",owner);
-    let tornadoCash_Eth_01 = await TornadoCash_Eth_01.deploy(verifier_address, new BigNumber(10).pow(17).toFixed().toString(), 31, ownerAddress, hasher_address)
+    let TornadoCash_Eth_01 = await ethers.getContractFactory("TornadoCash_Eth_01",owner)
+    let tornadoCash_Eth_01 = await TornadoCash_Eth_01.deploy(verifier_address, new BigNumber(10).pow(17).toFixed(0).toString(), 31, ownerAddress, hasher_address, {gasLimit : 9000000})
     await tornadoCash_Eth_01.deployed()
     if (tornadoCash_Eth_01.address.toLowerCase().toString() === calculateTornadoCash_Eth_01_Address.toLowerCase().toString())
         console.log("发布地址与预先计算地址一致，tornadoCash_Eth_01: "+tornadoCash_Eth_01.address.toString()+" calculate address: "+calculateTornadoCash_Eth_01_Address)
