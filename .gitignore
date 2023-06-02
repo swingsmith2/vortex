@@ -11,3 +11,5 @@ artifacts
 
 .idea
 build
+package-lock.json
+dependencies
