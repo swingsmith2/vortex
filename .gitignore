@@ -13,4 +13,4 @@ artifacts
 build
 package-lock.json
 dependencies
-/scripts/config.js
+scripts/config.js

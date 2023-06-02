@@ -6,7 +6,6 @@ const path = require("path");
 const BigNumber = require('bignumber.js');
 const util = require("ethereumjs-util");
 const config = require('./config')
-
 const jsonPath = path.join(__dirname, '..', 'build', 'Hasher.json');
 const outputPath = path.join(__dirname, '..', 'build', 'Addresses.txt')
 
@@ -190,6 +189,14 @@ async function main() {
     nonce2 = await getPendingNonce(ownerAddress)
     console.log("nonce2 after: "+nonce2)
     config.nonce2 = nonce2
+    
+    // 将修改后的配置对象转换为字符串
+    const updatedConfigFileContent = `module.exports = ${JSON.stringify(config, null, 2)}`;
+
+    // 将修改后的配置内容写入文件
+    let configPath = path.join(__dirname,  'config.js')
+    fs.writeFileSync(configPath, updatedConfigFileContent, 'utf8');
+
 }
 
 main()
