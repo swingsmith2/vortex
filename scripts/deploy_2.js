@@ -6,6 +6,7 @@ const path = require("path");
 const BigNumber = require('bignumber.js');
 const util = require("ethereumjs-util");
 const outputPath = path.join(__dirname, '..', 'build', 'Addresses.txt')
+const config = require('./config')
 
 // const { Web3 } = require('web3');
 // const util = require("ethereumjs-util"); //  web3.js has native ESM builds and (`import Web3 from 'web3'`)
@@ -37,11 +38,11 @@ async function main() {
     const ens_RelayerRegistry = "RelayerRegistry.eth"
     const ens_TornadoRouter = "TornadoRouter.eth"
     //要改的
-    let hasher_address = "0xfaAddC93baf78e89DCf37bA67943E1bE8F37Bb8c"
-    let usdt_address = "0x276C216D241856199A83bf27b2286659e5b877D3"
-    let verifier_address = "0x3347B4d90ebe72BeFb30444C9966B2B990aE9FcB"
-    let eNSRegistry_address = "0x3155755b79aA083bd953911C92705B7aA82a18F9"
-    let nonce2 = 124
+    let hasher_address = config.hasher_address
+    let usdt_address = config.usdt_address
+    let verifier_address = config.verifier_address
+    let eNSRegistry_address = config.eNSRegistry_address
+    let nonce2 = config.nonce2
 
     let calculateTornAddress = calculateAddress(ownerAddress, nonce2)
     let calculateTornadoCash_Eth_01_Address = calculateAddress(ownerAddress, ++nonce2)

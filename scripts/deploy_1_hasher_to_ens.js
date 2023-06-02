@@ -5,6 +5,7 @@ const fs = require("fs");
 const path = require("path");
 const BigNumber = require('bignumber.js');
 const util = require("ethereumjs-util");
+const config = require('./config')
 
 const jsonPath = path.join(__dirname, '..', 'build', 'Hasher.json');
 const outputPath = path.join(__dirname, '..', 'build', 'Addresses.txt')
@@ -46,6 +47,7 @@ async function main() {
     let d = "Hasher deployed to: " + hasher.address + "\n"
     console.log(d);
     fs.appendFileSync(outputPath, d)
+    config.hasher_address = hasher.address
 
     let x = await hasher.MiMCSponge(123456534,0)
     console.log("x: "+ x.toString())
@@ -63,6 +65,7 @@ async function main() {
     d = "USDT deployed to: " + usdt.address + "\n";
     console.log(d);
     fs.appendFileSync(outputPath, d)
+    config.usdt_address = usdt.address
 
     // //Verifier
     let calculateVerifierAddress = calculateAddress(ownerAddress, ++nonce)
@@ -77,6 +80,7 @@ async function main() {
     d = "Verifier deployed to: " + verifier.address + "\n";
     console.log(d);
     fs.appendFileSync(outputPath, d)
+    config.verifier_address = verifier.address
     //
     // //ENSRegistry
     let calculateENSRegistryAddress = calculateAddress(ownerAddress, ++nonce)
@@ -91,6 +95,7 @@ async function main() {
     d = "ENSRegistry deployed to: " + eNSRegistry.address + "\n";
     console.log(d);
     fs.appendFileSync(outputPath, d)
+    config.eNSRegistry_address = eNSRegistry.address
     //
     const ttl = 1
     const ens_gov = "governance.eth"
@@ -113,6 +118,7 @@ async function main() {
     let resolver = await ens.resolver(ethers.utils.formatBytes32String(ens_gov))
     console.log("resolver: "+resolver.toString())
 
+    
     //预先计算各合约地址并注册ENS
     let nonce2 = await getPendingNonce(ownerAddress)
     nonce2 += 5
@@ -183,6 +189,7 @@ async function main() {
 
     nonce2 = await getPendingNonce(ownerAddress)
     console.log("nonce2 after: "+nonce2)
+    config.nonce2 = nonce2
 }
 
 main()
