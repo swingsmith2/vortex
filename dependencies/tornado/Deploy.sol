@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import {ENS, ENSRegistry} from "./ENSRegistryWithFallback.sol";
 import {TornadoCash_erc20, IVerifier as erc20_IVerifier} from "./TornadoCash_erc20.sol";
-import {TornadoCash_Eth_01, IVerifier as eth_01_IVerifier} from "./TornadoCash_Eth_01.sol";
+import {TornadoCashEthC, IVerifier as eth_01_IVerifier} from "./TornadoCash_Eth_01.sol";
 import {TORN, TornadoRouter} from "./TornadoRouter.sol";
 import {ERC20Token} from "./USDT.sol";
 import {Verifier} from "./Verifier.sol";

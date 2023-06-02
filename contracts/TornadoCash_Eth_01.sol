@@ -186,7 +186,7 @@ contract ReentrancyGuard {
 
 
 interface IVerifier {
-    function verifyProof(bytes memory _proof, uint256[6] memory _input) external returns(bool);
+    function verifyProof(bytes memory _proof, uint256[6] memory _input) external view returns(bool);
 }
 
 contract Tornado is MerkleTreeWithHistory, ReentrancyGuard {
@@ -348,6 +348,14 @@ contract ETHTornado is Tornado {
 
 contract TornadoCash_Eth_01 is ETHTornado {
     bool public isMigrated = false;
+//    event Log(
+//        address _verifier,
+//        uint256 _denomination,
+//        uint32 _merkleTreeHeight,
+//        address _operator,
+//        address _hasher,
+//        string message
+//    );
 
     constructor(
         address _verifier,
@@ -356,6 +364,8 @@ contract TornadoCash_Eth_01 is ETHTornado {
         address _operator,
         address _hasher
     ) ETHTornado(_verifier, _denomination, _merkleTreeHeight, _operator, _hasher)  {
+//        emit Log(_verifier, _denomination, _merkleTreeHeight, _operator, _hasher, "TornadoCash_Eth_01 l367");
+//        revert("L368");
     }
 
     /**

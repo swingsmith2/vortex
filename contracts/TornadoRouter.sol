@@ -223,7 +223,7 @@ interface ENS {
 
 contract EnsResolve {
     function resolve(bytes32 node) public view virtual returns (address) {
-        ENS Registry = ENS(address(0x4bf010f1b9beDA5450a8dD702ED602A104ff65EE));
+        ENS Registry = ENS(address(0x5f3f1dBD7B74C6B46e8c44f98792A1dAf8d69154));
         return Registry.resolver(node);
     }
 
