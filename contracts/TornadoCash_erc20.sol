@@ -21,7 +21,7 @@ interface IHasher {
 }
 
 contract MerkleTreeWithHistory {
-    address private hasher;
+    IHasher private hasher;
     uint256 public constant FIELD_SIZE = 21888242871839275222246405745257275088548364400416034343698204186575808495617;
     uint256 public constant ZERO_VALUE = 21663839004416932945382355908790599225266501822907911457504978515578255421292; // = keccak256("tornado") % FIELD_SIZE
 
@@ -40,6 +40,7 @@ contract MerkleTreeWithHistory {
         require(_treeLevels > 0, "_treeLevels should be greater than zero");
         require(_treeLevels < 32, "_treeLevels should be less than 32");
         levels = _treeLevels;
+        hasher = IHasher(_hasher);
 
         bytes32 currentZero = bytes32(ZERO_VALUE);
         zeros.push(currentZero);
@@ -52,8 +53,6 @@ contract MerkleTreeWithHistory {
         }
 
         roots[0] = hashLeftRight(currentZero, currentZero);
-
-        hasher = _hasher;
     }
 
     /**
@@ -64,9 +63,9 @@ contract MerkleTreeWithHistory {
         require(uint256(_right) < FIELD_SIZE, "_right should be inside the field");
         uint256 R = uint256(_left);
         uint256 C = 0;
-        (R, C) = IHasher(hasher).MiMCSponge(R, C);
+        (R, C) = hasher.MiMCSponge(R, C);
         R = addmod(R, uint256(_right), FIELD_SIZE);
-        (R, C) = IHasher(hasher).MiMCSponge(R, C);
+        (R, C) = hasher.MiMCSponge(R, C);
         return bytes32(R);
     }
 
@@ -189,7 +188,7 @@ interface IVerifier {
     function verifyProof(bytes memory _proof, uint256[6] memory _input) external  returns(bool);
 }
 
-abstract contract Tornado is MerkleTreeWithHistory, ReentrancyGuard {
+contract Tornado is MerkleTreeWithHistory, ReentrancyGuard {
     uint256 public denomination;
     mapping(bytes32 => bool) public nullifierHashes;
     // we store all commitments just to prevent accidental deposits with the same commitment
@@ -242,7 +241,8 @@ abstract contract Tornado is MerkleTreeWithHistory, ReentrancyGuard {
     }
 
     /** @dev this function is defined in a child contract */
-    function _processDeposit() internal virtual;
+    function _processDeposit() internal virtual{
+    }
 
     /**
 @dev Withdraw a deposit from the contract. `proof` is a zkSNARK proof data, and input is an array of circuit public inputs
@@ -264,7 +264,9 @@ abstract contract Tornado is MerkleTreeWithHistory, ReentrancyGuard {
     }
 
     /** @dev this function is defined in a child contract */
-    function _processWithdraw(address payable _recipient, address payable _relayer, uint256 _fee, uint256 _refund) internal virtual;
+    function _processWithdraw(address payable _recipient, address payable _relayer, uint256 _fee, uint256 _refund) internal virtual{
+
+    }
 
     /** @dev whether a note is already spent */
     function isSpent(bytes32 _nullifierHash) public view returns(bool) {
