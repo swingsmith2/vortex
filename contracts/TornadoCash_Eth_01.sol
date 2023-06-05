@@ -40,7 +40,8 @@ contract MerkleTreeWithHistory {
         require(_treeLevels > 0, "_treeLevels should be greater than zero");
         require(_treeLevels < 32, "_treeLevels should be less than 32");
         levels = _treeLevels;
-
+        hasher = IHasher(_hasher);
+        
         bytes32 currentZero = bytes32(ZERO_VALUE);
         zeros.push(currentZero);
         filledSubtrees.push(currentZero);
@@ -52,8 +53,6 @@ contract MerkleTreeWithHistory {
         }
 
         roots[0] = hashLeftRight(currentZero, currentZero);
-
-        hasher = IHasher(_hasher);
     }
 
     /**
