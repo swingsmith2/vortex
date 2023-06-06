@@ -41,7 +41,7 @@ web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).on('receipt'
 // await utils.sleep(0.1);
 // web3.eth.sendSignedTransaction(signed.rawTransaction);
 // return signed.transactionHash
-
+//测试
 
 // 测试智能合约方法
 describe('MyContract', () => {
