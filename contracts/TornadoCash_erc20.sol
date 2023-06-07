@@ -214,14 +214,14 @@ contract Tornado is MerkleTreeWithHistory, ReentrancyGuard {
     @param _operator operator address (see operator comment above)
   */
     constructor(
-        IVerifier _verifier,
+        address _verifier,
         uint256 _denomination,
         uint32 _merkleTreeHeight,
         address _operator,
         address _hasher
     ) MerkleTreeWithHistory(_merkleTreeHeight, _hasher) {
         require(_denomination > 0, "denomination should be greater than 0");
-        verifier = _verifier;
+        verifier = IVerifier(_verifier);
         operator = _operator;
         denomination = _denomination;
     }
@@ -317,7 +317,7 @@ contract TornadoCash_erc20 is Tornado {
     address public token;
 
     constructor(
-        IVerifier _verifier,
+        address _verifier,
         uint256 _denomination,
         uint32 _merkleTreeHeight,
         address _operator,
