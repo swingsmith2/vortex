@@ -123,8 +123,6 @@ async function main() {
     nonce2 += 5
     console.log("nonce2:"+nonce2)
     let calculateTornAddress = calculateAddress(ownerAddress, nonce2)
-    let calculateTornadoCash_Eth_01_Address = calculateAddress(ownerAddress, ++nonce2)
-    let calculateTornadoCash_erc20_Address = calculateAddress(ownerAddress, ++nonce2)
     let calculateFeeManagerAddress = calculateAddress(ownerAddress, ++nonce2)
     let calculateTornadoStakingRewardsAddress = calculateAddress(ownerAddress, ++nonce2)
     let calculateRelayerRegistryAddress = calculateAddress(ownerAddress, ++nonce2)
@@ -136,7 +134,7 @@ async function main() {
     tx = await ens.setRecord(ethers.utils.formatBytes32String(ens_FeeManager), ownerAddress, calculateFeeManagerAddress, ttl)
     receipt = await tx.wait()
     // console.log('Transaction receipt: '+JSON.stringify(receipt).toString());
-    d = ens_FeeManager + "reserve to: " + calculateFeeManagerAddress + "\n";
+    d = ens_FeeManager + " reserve to: " + calculateFeeManagerAddress + "\n";
     console.log(d);
     fs.appendFileSync(outputPath, d)
     resolver = await ens.resolver(ethers.utils.formatBytes32String(ens_FeeManager))
@@ -147,7 +145,7 @@ async function main() {
     tx = await ens.setRecord(ethers.utils.formatBytes32String(ens_TornadoStakingRewards), ownerAddress, calculateTornadoStakingRewardsAddress, ttl)
     receipt = await tx.wait()
     // console.log('Transaction receipt: '+JSON.stringify(receipt).toString());
-    d = ens_TornadoStakingRewards + "reserve to: " + calculateTornadoStakingRewardsAddress + "\n";
+    d = ens_TornadoStakingRewards + " reserve to: " + calculateTornadoStakingRewardsAddress + "\n";
     console.log(d);
     fs.appendFileSync(outputPath, d)
     resolver = await ens.resolver(ethers.utils.formatBytes32String(ens_TornadoStakingRewards))
@@ -158,7 +156,7 @@ async function main() {
     tx = await ens.setRecord(ethers.utils.formatBytes32String(ens_RelayerRegistry), ownerAddress, calculateRelayerRegistryAddress, ttl)
     receipt = await tx.wait()
     // console.log('Transaction receipt: '+JSON.stringify(receipt).toString());
-    d = ens_RelayerRegistry + "reserve to: " + calculateRelayerRegistryAddress + "\n";
+    d = ens_RelayerRegistry + " reserve to: " + calculateRelayerRegistryAddress + "\n";
     console.log(d);
     fs.appendFileSync(outputPath, d)
     resolver = await ens.resolver(ethers.utils.formatBytes32String(ens_RelayerRegistry))
@@ -169,7 +167,7 @@ async function main() {
     tx = await ens.setRecord(ethers.utils.formatBytes32String(ens_InstanceRegistry), ownerAddress, calculateInstanceRegistryAddress, ttl)
     receipt = await tx.wait()
     // console.log('Transaction receipt: '+JSON.stringify(receipt).toString());
-    d = ens_InstanceRegistry + "reserve to: " + calculateInstanceRegistryAddress + "\n";
+    d = ens_InstanceRegistry + " reserve to: " + calculateInstanceRegistryAddress + "\n";
     console.log(d);
     fs.appendFileSync(outputPath, d)
     resolver = await ens.resolver(ethers.utils.formatBytes32String(ens_InstanceRegistry))
@@ -180,7 +178,7 @@ async function main() {
     tx = await ens.setRecord(ethers.utils.formatBytes32String(ens_TornadoRouter), ownerAddress, calculateTornadoRouterAddress, ttl)
     receipt = await tx.wait()
     // console.log('Transaction receipt: '+JSON.stringify(receipt).toString());
-    d = ens_TornadoRouter + "reserve to: " + calculateTornadoRouterAddress + "\n";
+    d = ens_TornadoRouter + " reserve to: " + calculateTornadoRouterAddress + "\n";
     console.log(d);
     fs.appendFileSync(outputPath, d)
     resolver = await ens.resolver(ethers.utils.formatBytes32String(ens_TornadoRouter))

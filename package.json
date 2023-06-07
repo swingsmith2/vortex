@@ -32,6 +32,7 @@
     "solhint-plugin-prettier": "^0.0.5",
     "solidity-coverage": "^0.7.22",
     "solidity-create2-deployer": "^0.4.0",
+    "struct": "^0.0.12",
     "web3": "^1.10.0",
     "web3-utils": "^1.10.0",
     "websnark": "git+https://github.com/tornadocash/websnark.git#4c0af6a8b65aabea3c09f377f63c44e7a58afa6d"
