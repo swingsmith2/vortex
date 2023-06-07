@@ -193,100 +193,100 @@ async function main() {
     //InstanceRegistry
     //ETH01
     const Instance_ETH01 = {
-        'isERC20': false,
-        'token': '0x0000000000000000000000000000000000000000',
-        'state': 1,
-        'uniswapPoolSwappingFee': 30,
-        'protocolFeePercentage': 3
+        isERC20: false,
+        token: '0x0000000000000000000000000000000000000000',
+        state: 1,
+        uniswapPoolSwappingFee: 30,
+        protocolFeePercentage: 3
     };
     const Tornado_ETH01 = {
-        'addr': tornadoCash_Eth_01.address,
-        'instance': Instance_ETH01
+        addr: tornadoCash_Eth_01.address,
+        instance: Instance_ETH01
     }
 
     const Instance_ETH1 = {
-        'isERC20': false,
-        'token': '0x0000000000000000000000000000000000000000',
-        'state': 1,
-        'uniswapPoolSwappingFee': 30,
-        'protocolFeePercentage': 3
+        isERC20: false,
+        token: '0x0000000000000000000000000000000000000000',
+        state: 1,
+        uniswapPoolSwappingFee: 30,
+        protocolFeePercentage: 3
     };
     const Tornado_ETH1 = {
-        'addr': tornadoCash_Eth_1.address,
-        'instance': Instance_ETH1
+        addr: tornadoCash_Eth_1.address,
+        instance: Instance_ETH1
     }
 
     const Instance_ETH10 = {
-        'isERC20': false,
-        'token': '0x0000000000000000000000000000000000000000',
-        'state': 1,
-        'uniswapPoolSwappingFee': 30,
-        'protocolFeePercentage': 3
+        isERC20: false,
+        token: '0x0000000000000000000000000000000000000000',
+        state: 1,
+        uniswapPoolSwappingFee: 30,
+        protocolFeePercentage: 3
     };
     const Tornado_ETH10 = {
-        'addr': tornadoCash_Eth_10.address,
-        'instance': Instance_ETH10
+        addr: tornadoCash_Eth_10.address,
+        instance: Instance_ETH10
     }
 
     const Instance_ETH100 = {
-        'isERC20': false,
-        'token': '0x0000000000000000000000000000000000000000',
-        'state': 1,
-        'uniswapPoolSwappingFee': 30,
-        'protocolFeePercentage': 3
+        isERC20: false,
+        token: '0x0000000000000000000000000000000000000000',
+        state: 1,
+        uniswapPoolSwappingFee: 30,
+        protocolFeePercentage: 3
     };
     const Tornado_ETH100 = {
-        'addr': tornadoCash_Eth_100.address,
-        'instance': Instance_ETH100
+        addr: tornadoCash_Eth_100.address,
+        instance: Instance_ETH100
     }
 
     //USDT100
     const Instance_USDT100 = {
-        'isERC20': true,
-        'token': usdt_address,
-        'state': 1,
-        'uniswapPoolSwappingFee': 30,
-        'protocolFeePercentage': 3
+        isERC20: true,
+        token: usdt_address,
+        state: 1,
+        uniswapPoolSwappingFee: 30,
+        protocolFeePercentage: 3
     };
     const Tornado_USDT100 = {
-        'addr': tornadoCash_erc20_USDT100.address,
-        'instance': Instance_USDT100
+        addr: tornadoCash_erc20_USDT100.address,
+        instance: Instance_USDT100
     }
 
     const Instance_USDT1000 = {
-        'isERC20': true,
-        'token': usdt_address,
-        'state': 1,
-        'uniswapPoolSwappingFee': 30,
-        'protocolFeePercentage': 3
+        isERC20: true,
+        token: usdt_address,
+        state: 1,
+        uniswapPoolSwappingFee: 30,
+        protocolFeePercentage: 3
     };
     const Tornado_USDT1000 = {
-        'addr': tornadoCash_erc20_USDT1000.address,
-        'instance': Instance_USDT1000
+        addr: tornadoCash_erc20_USDT1000.address,
+        instance: Instance_USDT1000
     }
 
     const Instance_USDT10000 = {
-        'isERC20': true,
-        'token': usdt_address,
-        'state': 1,
-        'uniswapPoolSwappingFee': 30,
-        'protocolFeePercentage': 3
+        isERC20: true,
+        token: usdt_address,
+        state: 1,
+        uniswapPoolSwappingFee: 30,
+        protocolFeePercentage: 3
     };
     const Tornado_USDT10000 = {
-        'addr': tornadoCash_erc20_USDT10000.address,
-        'instance': Instance_USDT10000
+        addr: tornadoCash_erc20_USDT10000.address,
+        instance: Instance_USDT10000
     }
 
     const Instance_USDT100000 = {
-        'isERC20': true,
-        'token': usdt_address,
-        'state': 1,
-        'uniswapPoolSwappingFee': 30,
-        'protocolFeePercentage': 3
+        isERC20: true,
+        token: usdt_address,
+        state: 1,
+        uniswapPoolSwappingFee: 30,
+        protocolFeePercentage: 3
     };
     const Tornado_USDT100000 = {
-        'addr': tornadoCash_erc20_USDT100000.address,
-        'instance': Instance_USDT100000
+        addr: tornadoCash_erc20_USDT100000.address,
+        instance: Instance_USDT100000
     }
 
     //
