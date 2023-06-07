@@ -1,7 +1,7 @@
 module.exports = {
-  "hasher_address": "0x1291Be112d480055DaFd8a610b7d1e203891C274",
-  "usdt_address": "0x5f3f1dBD7B74C6B46e8c44f98792A1dAf8d69154",
-  "verifier_address": "0xb7278A61aa25c888815aFC32Ad3cC52fF24fE575",
-  "eNSRegistry_address": "0xCD8a1C3ba11CF5ECfa6267617243239504a98d90",
-  "nonce2": 60
+  "hasher_address": "0x1780bCf4103D3F501463AD3414c7f4b654bb7aFd",
+  "usdt_address": "0x5133BBdfCCa3Eb4F739D599ee4eC45cBCD0E16c5",
+  "verifier_address": "0x71089Ba41e478702e1904692385Be3972B2cBf9e",
+  "eNSRegistry_address": "0x8F4ec854Dd12F1fe79500a1f53D0cbB30f9b6134",
+  "nonce2": 194
 }

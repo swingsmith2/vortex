@@ -224,7 +224,7 @@ interface ENS {
 contract EnsResolve {
     function resolve(bytes32 node) public view virtual returns (address) {
 
-        ENS Registry = ENS(address(0xB06c856C8eaBd1d8321b687E188204C1018BC4E5));
+        ENS Registry = ENS(address(0x8F4ec854Dd12F1fe79500a1f53D0cbB30f9b6134));
 
         return Registry.resolver(node);
     }
