@@ -72,10 +72,10 @@ module.exports = {
         netId31337: {
             eth: {
                 instanceAddress: {
-                    0.1: '0x8b3f5393bA08c24cc7ff5A66a832562aAB7bC95f',
-                    1: '0xD6a6AC46d02253c938B96D12BE439F570227aE8E',
-                    10: '0xe1BE96331391E519471100c3c1528B66B8F4e5a7',
-                    100: '0xd037E0Ac98Dab2fCb7E296c69C6e52767Ae5414D',
+                    0.1: '0x04C89607413713Ec9775E14b954286519d836FEf',
+                    1: '0x4C4a2f8c81640e47606d3fd77B353E87Ba015584',
+                    10: '0x21dF544947ba3E8b3c32561399E88B52Dc8b2823',
+                    100: '0x2E2Ed0Cfd3AD2f1d34481277b3204d807Ca2F8c2',
                 },
                 symbol: 'ETH',
                 decimals: 18,
@@ -126,12 +126,12 @@ module.exports = {
             },
             usdt: {
                 instanceAddress: {
-                    100: '0x327853Da7916a6A0935563FB1919A48843036b42',
-                    1000: '0x531AA4DF5858EA1d0031Dad16e3274609DE5AcC0',
-                    10000: '0x0958275F0362cf6f07D21373aEE0cf37dFe415dD',
-                    100000: '0x14aEd24B67EaF3FF28503eB92aeb217C47514364',
+                    100: '0xD8a5a9b31c3C0232E196d518E89Fd8bF83AcAd43',
+                    1000: '0xDC11f7E700A4c898AE5CAddB1082cFfa76512aDD',
+                    10000: '0x51A1ceB83B83F1985a81C295d1fF28Afef186E02',
+                    100000: '0x36b58F5C1969B7b6591D752ea6F5486D069010AB',
                 },
-                tokenAddress: '0x03c5F29e9296006876d8DF210BCFfD7EA5Db1Cf1',
+                tokenAddress: '0xCD8a1C3ba11CF5ECfa6267617243239504a98d90',
                 symbol: 'USDT',
                 decimals: 6,
             },

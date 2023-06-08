@@ -14,3 +14,4 @@ build
 package-lock.json
 dependencies
 scripts/config.js
+test/config.js
