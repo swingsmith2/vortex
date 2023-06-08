@@ -69,7 +69,7 @@ module.exports = {
                 decimals: 6,
             },
         },
-        netId42: {
+        netId31337: {
             eth: {
                 instanceAddress: {
                     0.1: '0x8b3f5393bA08c24cc7ff5A66a832562aAB7bC95f',

@@ -43,7 +43,7 @@ async function printETHBalance({address, name}) {
 
 /** Display ERC20 account balance */
 async function printERC20Balance({address, name, tokenAddress}) {
-    const erc20ContractJson = require(__dirname + '/../build/contracts/ERC20Mock.json')
+    const erc20ContractJson = require('artifacts/contracts/USDT.sol/ERC20Token.json')
     erc20 = tokenAddress ? new web3.eth.Contract(erc20ContractJson.abi, tokenAddress) : erc20
     console.log(`${name} Token Balance is`, web3.utils.fromWei(await erc20.methods.balanceOf(address).call()))
 }
@@ -74,7 +74,7 @@ async function deposit({currency, amount}) {
     if (currency === 'eth') {
         await printETHBalance({address: tornado._address, name: 'Tornado'})
         await printETHBalance({address: senderAccount, name: 'Sender account'})
-        const value = isLocalRPC ? ETH_AMOUNT : fromDecimals({amount, decimals: 18})
+        const value = fromDecimals({amount, decimals: 18})
         console.log('Submitting deposit transaction')
         await tornado.methods.deposit(toHex(deposit.commitment)).send({value, from: senderAccount, gas: 2e6})
         await printETHBalance({address: tornado._address, name: 'Tornado'})
@@ -82,12 +82,12 @@ async function deposit({currency, amount}) {
     } else { // a token
         await printERC20Balance({address: tornado._address, name: 'Tornado'})
         await printERC20Balance({address: senderAccount, name: 'Sender account'})
-        const decimals = isLocalRPC ? 18 : config.deployments[`netId${netId}`][currency].decimals
-        const tokenAmount = isLocalRPC ? TOKEN_AMOUNT : fromDecimals({amount, decimals})
-        if (isLocalRPC) {
-            console.log('Minting some test tokens to deposit')
-            await erc20.methods.mint(senderAccount, tokenAmount).send({from: senderAccount, gas: 2e6})
-        }
+        const decimals = config.deployments[`netId${netId}`][currency].decimals
+        const tokenAmount = fromDecimals({amount, decimals})
+        // if (isLocalRPC) {
+        //     console.log('Minting some test tokens to deposit')
+        //     await erc20.methods.mint(senderAccount, tokenAmount).send({from: senderAccount, gas: 2e6})
+        // }
 
         const allowance = await erc20.methods.allowance(senderAccount, tornado._address).call({from: senderAccount})
         console.log('Current allowance is', fromWei(allowance))
@@ -203,7 +203,7 @@ async function withdraw({deposit, currency, amount, recipient, relayerURL, refun
         assert(netId === await web3.eth.net.getId() || netId === '*', 'This relay is for different network')
         console.log('Relay address: ', relayerAddress)
 
-        const decimals = isLocalRPC ? 18 : config.deployments[`netId${netId}`][currency].decimals
+        const decimals = config.deployments[`netId${netId}`][currency].decimals
         const fee = calculateFee({gasPrices, currency, amount, refund, ethPrices, relayerServiceFee, decimals})
         if (fee.gt(fromDecimals({amount, decimals}))) {
             throw new Error('Too high refund')
@@ -474,18 +474,18 @@ async function loadWithdrawalData({amount, currency, deposit}) {
 async function init({rpc, noteNetId, currency = 'dai', amount = '100'}) {
     let contractJson, erc20ContractJson, erc20tornadoJson, tornadoAddress, tokenAddress
     // TODO do we need this? should it work in browser really?
-    if (inBrowser) {
-        // Initialize using injected web3 (Metamask)
-        // To assemble web version run `npm run browserify`
-        web3 = new Web3(Web3.givenProvider || rpc);
-        contractJson = await (await fetch('build/contracts/ETHTornado.json')).json()
-        circuit = await (await fetch('build/circuits/withdraw.json')).json()
-        proving_key = await (await fetch('build/circuits/withdraw_proving_key.bin')).arrayBuffer()
-        MERKLE_TREE_HEIGHT = 20
-        ETH_AMOUNT = 1e18
-        TOKEN_AMOUNT = 1e19
-        senderAccount = (await web3.eth.getAccounts())[0]
-    }
+
+    // Initialize using injected web3 (Metamask)
+    // To assemble web version run `npm run browserify`
+    web3 = new Web3(Web3.givenProvider || rpc);
+    contractJson = await ((await fetch('artifacts/contracts/TornadoRouter.sol/TornadoRouter.sol.json')).json())
+    circuit = await (await fetch('./build/circuits/withdraw.json')).json()
+    proving_key = await (await fetch('./build/circuits/withdraw_proving_key.bin')).arrayBuffer()
+    MERKLE_TREE_HEIGHT = 20
+    ETH_AMOUNT = 1e18
+    TOKEN_AMOUNT = 1e19
+    senderAccount = (await web3.eth.getAccounts())[0]
+
     // groth16 initialises a lot of Promises that will never be resolved, that's why we need to use process.exit to terminate the CLI
     groth16 = await buildGroth16()
     netId = await web3.eth.net.getId()
@@ -494,42 +494,37 @@ async function init({rpc, noteNetId, currency = 'dai', amount = '100'}) {
     }
     isLocalRPC = netId > 42
 
-    if (isLocalRPC) {
-        tornadoAddress = currency === 'eth' ? contractJson.networks[netId].address : erc20tornadoJson.networks[netId].address
-        tokenAddress = currency !== 'eth' ? erc20ContractJson.networks[netId].address : null
-        senderAccount = (await web3.eth.getAccounts())[0]
-    } else {
-        try {
-            tornadoAddress = config.deployments[`netId${netId}`][currency].instanceAddress[amount]
-            if (!tornadoAddress) {
-                throw new Error()
-            }
-            tokenAddress = config.deployments[`netId${netId}`][currency].tokenAddress
-        } catch (e) {
-            console.error('There is no such tornado instance, check the currency and amount you provide')
-            process.exit(1)
+
+    try {
+        tornadoAddress = config.deployments[`netId${netId}`][currency].instanceAddress[amount]
+        if (!tornadoAddress) {
+            throw new Error()
         }
+        tokenAddress = config.deployments[`netId${netId}`][currency].tokenAddress
+    } catch (e) {
+        console.error('There is no such tornado instance, check the currency and amount you provide')
+        process.exit(1)
     }
+
     tornado = new web3.eth.Contract(contractJson.abi, tornadoAddress)
     erc20 = currency !== 'eth' ? new web3.eth.Contract(erc20ContractJson.abi, tokenAddress) : {}
 }
 
 async function main() {
-    if (inBrowser) {
-        const instance = {currency: 'eth', amount: '0.1'}
-        await init(instance)
-        window.deposit = async () => {
-            await deposit(instance)
-        }
-        window.withdraw = async () => {
-            const noteString = prompt('Enter the note to withdraw')
-            const recipient = (await web3.eth.getAccounts())[0]
 
-            const {currency, amount, netId, deposit} = parseNote(noteString)
-            await init({noteNetId: netId, currency, amount})
-            await withdraw({deposit, currency, amount, recipient})
-        }
-    }
+    const instance = {currency: 'eth', amount: '0.1'}
+    await init(instance)
+    let noteStr = await deposit(instance)
+    console.log("deposit success,note string:",noteStr.toString())
+
+    const noteString = noteStr.toString()
+    const recipient = (await web3.eth.getAccounts())[0]
+
+    const {currency, amount, netId, deposit2} = parseNote(noteString)
+    await init({noteNetId: netId, currency, amount})
+    await withdraw({deposit2, currency, amount, recipient})
+
+
 }
 
 main()
