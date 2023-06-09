@@ -7,7 +7,7 @@ require("@openzeppelin/hardhat-upgrades");
 
 // Go to https://infura.io, sign up, create a new API key
 // in its dashboard, and replace "KEY" with it
-const INFURA_API_KEY = "7ebf6e64dfb5446a9442d5a6672af3e0";
+const INFURA_API_KEY = "2ea327121c504058966560036148086b";
 
 // Replace this private key with your Sepolia account private key
 // To export your private key from Metamask, open Metamask and
@@ -38,7 +38,7 @@ module.exports = {
     sepolia: {
       url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
       accounts: [SEPOLIA_PRIVATE_KEY],
-      chainId: 5
+      chainId: 11155111
     }
   },
   paths: {

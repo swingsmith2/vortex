@@ -17,6 +17,7 @@ const websnarkUtils = require('websnark/src/utils')
 const {toWei, fromWei, toBN, BN} = require('web3-utils')
 const config = require('./config')
 const program = require('commander')
+const erc20ContractJson = require("../artifacts/contracts/USDT.sol/ERC20Token.json");
 
 let web3, tornadoRouter, circuit, proving_key, groth16, erc20, senderAccount, netId
 let MERKLE_TREE_HEIGHT, ETH_AMOUNT, TOKEN_AMOUNT, PRIVATE_KEY
@@ -77,13 +78,15 @@ async function deposit({currency, amount}) {
         await printETHBalance({address: senderAccount, name: 'Sender account'})
         const value = fromDecimals({amount, decimals: 18})
         console.log('Submitting deposit transaction')
-        await tornadoRouter.methods.deposit(toHex(deposit.commitment)).send({value, from: senderAccount, gas: 2e6})
+        const instanceAddress = config.deployments[`netId${netId}`][currency].instanceAddress[amount]
+        await tornadoRouter.methods.deposit(instanceAddress, toHex(deposit.commitment), toHex("encryptedNote")).send({value, from: senderAccount, gas: 2e6})
         await printETHBalance({address: tornadoRouter._address, name: 'Tornado'})
         await printETHBalance({address: senderAccount, name: 'Sender account'})
     } else { // a token
         await printERC20Balance({address: tornadoRouter._address, name: 'Tornado'})
         await printERC20Balance({address: senderAccount, name: 'Sender account'})
         const decimals = config.deployments[`netId${netId}`][currency].decimals
+        const instanceAddress = config.deployments[`netId${netId}`][currency].instanceAddress[amount]
         const tokenAmount = fromDecimals({amount, decimals})
         // if (isLocalRPC) {
         //     console.log('Minting some test tokens to deposit')
@@ -98,7 +101,7 @@ async function deposit({currency, amount}) {
         }
 
         console.log('Submitting deposit transaction')
-        await tornadoRouter.methods.deposit(toHex(deposit.commitment)).send({from: senderAccount, gas: 2e6})
+        await tornadoRouter.methods.deposit(instanceAddress, toHex(deposit.commitment), toHex("encryptedNote")).send({from: senderAccount, gas: 2e6})
         await printERC20Balance({address: tornadoRouter._address, name: 'Tornado'})
         await printERC20Balance({address: senderAccount, name: 'Sender account'})
     }
@@ -110,11 +113,20 @@ async function deposit({currency, amount}) {
  * Generate merkle tree for a deposit.
  * Download deposit events from the tornado, reconstructs merkle tree, finds our deposit leaf
  * in it and generates merkle proof
+ * @param currency
+ * @param amount
  * @param deposit Deposit object
  */
-async function generateMerkleProof(deposit) {
+async function generateMerkleProof(currency, amount, deposit) {
     // Get all deposit events from smart contract and assemble merkle tree from them
     console.log('Getting current state from tornado contract')
+    let instanceContractJson
+    if (currency === 'eth') instanceContractJson = require('artifacts/contracts/TornadoCash_Eth_01.sol/TornadoCash_Eth_01.json')
+    else instanceContractJson = require('artifacts/contracts/TornadoCash_erc20.sol/TornadoCash_erc20.json')
+
+    const instanceAddress = config.deployments[`netId${netId}`][currency].instanceAddress[amount]
+    const instance = new web3.eth.Contract(erc20ContractJson.abi, tokenAddress)
+
     const events = await tornadoRouter.getPastEvents('Deposit', {fromBlock: 0, toBlock: 'latest'})
     const leaves = events
         .sort((a, b) => a.returnValues.leafIndex - b.returnValues.leafIndex) // Sort events in chronological order
@@ -503,7 +515,7 @@ async function init({rpc, noteNetId, currency = 'dai', amount = '100'}) {
 
     try {
         // tornadoAddress = config.deployments[`netId${netId}`][currency].instanceAddress[amount]
-        tornadoRouterAddress = "0xdbC43Ba45381e02825b14322cDdd15eC4B3164E6"
+        tornadoRouterAddress = "0x0B306BF915C4d645ff596e518fAf3F9669b97016"
         if (!tornadoRouterAddress) {
             throw new Error()
         }
